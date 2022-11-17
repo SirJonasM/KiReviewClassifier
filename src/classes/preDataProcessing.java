@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 public class preDataProcessing {
     static BufferedReader reader;
+    static BufferedWriter writer;
     static ArrayList<Review> reviews = new ArrayList<>();
 
 
     public static void main(String[] args) throws IOException {
         reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
+        writer = new BufferedWriter(new FileWriter("Data/TrainDataProcessed.arff"));
         String s = "abcneg";
         getReviews();
         reader.close();
@@ -20,25 +22,22 @@ public class preDataProcessing {
         while(!line.equals("@data"))
             line = reader.readLine();
         line = reader.readLine();
-        StringBuilder reviewText = new StringBuilder();
-        int countLine = 0;
-        int n = 1;
         while(line != null) {
-            reviewText.append(line.split("'")[1]);
-            String evaluation = line.substring(line.length() - 3);
-            Review review = new Review(reviewText.toString(), evaluation);
+            Review review = getReview(line);
+            processReview(review);
             line = reader.readLine();
-            countLine++;
-            if(countLine>=1_000*n){
-                System.out.println(countLine);
-                n++;
-            }
-
         }
         System.out.println(reviews.size());
     }
+    private static Review getReview(String line) {
+        String reviewText = line.split("'")[1];
+        String evaluation = line.substring(line.length() - 3);
+        return new Review(reviewText, evaluation);
+    }
+    private static void writeReview(Review review){
 
-    private static void getReview() {
+    }
 
+    private static void processReview(Review review) {
     }
 }
