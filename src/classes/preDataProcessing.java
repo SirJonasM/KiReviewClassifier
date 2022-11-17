@@ -1,11 +1,12 @@
 package classes;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class preDataProcessing {
     static BufferedReader reader;
     static BufferedWriter writer;
-
 
     public static void main(String[] args) throws IOException {
         reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
@@ -34,6 +35,20 @@ public class preDataProcessing {
     }
 
     private static void processReview(Review review) {
-
+        Pattern pattern = Pattern.compile("", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(review.text);
+        boolean matchFound = matcher.find();
+        if(matchFound) {
+            //System.out.print("");
+        }
     }
 }
+
+/*
+Datensatz auf relevante Wörter reduzieren
+Adjektive
+Verben
+toLowerCase
+<Br>,... entfernen
+couldnt
+ */
