@@ -12,9 +12,9 @@ public class preDataProcessing {
     public static void main(String[] args) throws IOException {
         reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
         writer = new BufferedWriter(new FileWriter("Data/TrainDataProcessed.arff"));
-        String s = "abcneg";
         getReviews();
         reader.close();
+        writer.close();
     }
 
     private static void getReviews() throws IOException {
@@ -25,6 +25,7 @@ public class preDataProcessing {
         while(line != null) {
             Review review = getReview(line);
             processReview(review);
+            writeReview(review);
             line = reader.readLine();
         }
         System.out.println(reviews.size());
