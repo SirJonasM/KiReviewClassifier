@@ -1,11 +1,13 @@
 package classes;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 
-
+//https://gist.github.com/mkulakowski2/4289437
+//https://gist.github.com/mkulakowski2/4289441
 public class preDataProcessing {
     static BufferedReader reader;
     static BufferedReader positiveWordsReader;
@@ -14,16 +16,24 @@ public class preDataProcessing {
     static BufferedWriter writer;
     static ArrayList<String> positiveWords = new ArrayList<>();
     static ArrayList<String> negativeWords = new ArrayList<>();
+    static ArrayList<String> connectWords = new ArrayList<>();
     static String header = """
             @relation imdb-sentiment-2011-weka.filters.unsupervised.instance.Resample-S1-Z50.0-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V
                         
             @attribute Text string
             @attribute class-att {pos,neg}
                                           
-            @data""";
+            @data
+            """;
 
 
     public static void main(String[] args) throws IOException {
+        connectWords.add("dont");
+        connectWords.add("didnt");
+        connectWords.add("not");
+        connectWords.add("wont");
+
+
         reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
         positiveWordsReader = new BufferedReader(new FileReader("Data/positiveWords"));
         negativeWordsReader = new BufferedReader(new FileReader("Data/negativeWords"));
@@ -40,6 +50,7 @@ public class preDataProcessing {
         while(!line.equals("@data"))
             line = reader.readLine();
         line = reader.readLine();
+
         while(line != null) {
             Review review = getReview(line);
             processReview(review);
@@ -72,20 +83,42 @@ public class preDataProcessing {
     }
 
     private static void processReview(Review review) {
-        Pattern pattern = Pattern.compile("", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(review.text);
-        boolean matchFound = matcher.find();
-        if(matchFound) {
-            //System.out.print("");
+        review.setText(review.getText().toLowerCase());
+        String[] text = review.getText().split(" ");
+        for(int i = 0;i< text.length;i++){
+            if(positiveWords.contains(text[i])){
+                continue;
+            }
+            if(negativeWords.contains(text[i])){
+                continue;
+            }
+            if(text[i].equals("not")){
+                i++;
+                continue;
+            }
+            text[i] = "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        Arrays.stream(text).forEach(a -> {
+            if(a.isEmpty()) return;
+            if(connectWords.contains(a)) {
+                stringBuilder.append(a);
+                return;
+            }
+            stringBuilder.append(a).append(" ");
+
+        });
+        review.setText(stringBuilder.toString());
         }
     }
-}
+
 
 /*
 Datensatz auf relevante Wörter reduzieren
 Adjektive
 Verben
 toLowerCase
+not ... adjective -> notadjective
 <Br>,... entfernen
 couldnt
  */
