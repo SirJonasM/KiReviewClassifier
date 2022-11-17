@@ -1,23 +1,15 @@
 package classes;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class preDataProcessing {
     static BufferedReader reader;
     static BufferedWriter writer;
-    static ArrayList<Review> reviews = new ArrayList<>();
 
 
     public static void main(String[] args) throws IOException {
         reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
         writer = new BufferedWriter(new FileWriter("Data/TrainDataProcessed.arff"));
-        getReviews();
-        reader.close();
-        writer.close();
-    }
-
-    private static void getReviews() throws IOException {
         String line = reader.readLine();
         while(!line.equals("@data"))
             line = reader.readLine();
@@ -28,8 +20,10 @@ public class preDataProcessing {
             writeReview(review);
             line = reader.readLine();
         }
-        System.out.println(reviews.size());
+        reader.close();
+        writer.close();
     }
+
     private static Review getReview(String line) {
         String reviewText = line.split("'")[1];
         String evaluation = line.substring(line.length() - 3);
@@ -40,5 +34,6 @@ public class preDataProcessing {
     }
 
     private static void processReview(Review review) {
+
     }
 }
