@@ -1,7 +1,10 @@
 package classes;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
+
 
 public class preDataProcessing {
     static BufferedReader reader;
@@ -11,8 +14,6 @@ public class preDataProcessing {
     static BufferedWriter writer;
     static ArrayList<String> positiveWords = new ArrayList<>();
     static ArrayList<String> negativeWords = new ArrayList<>();
-
-
     static String header = """
             @relation imdb-sentiment-2011-weka.filters.unsupervised.instance.Resample-S1-Z50.0-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V
                         
@@ -20,6 +21,7 @@ public class preDataProcessing {
             @attribute class-att {pos,neg}
                                           
             @data""";
+
 
     public static void main(String[] args) throws IOException {
         reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
@@ -70,6 +72,20 @@ public class preDataProcessing {
     }
 
     private static void processReview(Review review) {
-
+        Pattern pattern = Pattern.compile("", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(review.text);
+        boolean matchFound = matcher.find();
+        if(matchFound) {
+            //System.out.print("");
+        }
     }
 }
+
+/*
+Datensatz auf relevante Wörter reduzieren
+Adjektive
+Verben
+toLowerCase
+<Br>,... entfernen
+couldnt
+ */
