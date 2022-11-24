@@ -25,13 +25,13 @@ public class Classifier {
     FilteredClassifier fc;
     private final boolean  testMode;
 
-    public Classifier(int numToSelect, int wordsToKeep, String trainingSet, String testSet) {
+    public Classifier(int numToSelect, int wordsToKeep, String trainingsSet, String testSet) {
         testMode = false;
         this.numToSelect = numToSelect;
         this.wordsToKeep = wordsToKeep;
         try {
             //Daten einlesen
-            DataSource trainData = new DataSource("Data/" + trainingSet + ".arff");
+            DataSource trainData = new DataSource("Data/" + trainingsSet + ".arff");
             trainDataSet = trainData.getDataSet();
             trainDataSet.setClassIndex(1);
 
@@ -60,10 +60,10 @@ public class Classifier {
 
     private void loadModel(String model) {
         try{
-            ObjectInputStream inClassifier = new ObjectInputStream(new FileInputStream("Models/" + model));
+            ObjectInputStream inClassifier = new ObjectInputStream(new FileInputStream("Models/Classifier/" + model));
             fc = (FilteredClassifier) inClassifier.readObject();
             inClassifier.close();
-            ObjectInputStream inStringToWordVector = new ObjectInputStream(new FileInputStream("StringToWordVector/" + model));
+            ObjectInputStream inStringToWordVector = new ObjectInputStream(new FileInputStream("Models/StringToWordVector/" + model));
             stringToWordVector = (StringToWordVector) inStringToWordVector.readObject();
             inStringToWordVector.close();
         }catch (IOException e) {
@@ -76,9 +76,9 @@ public class Classifier {
 
 
     void saveModel(String name) throws IOException {
-        ObjectOutputStream outModel = new ObjectOutputStream(new FileOutputStream("Models/" + name));
+        ObjectOutputStream outModel = new ObjectOutputStream(new FileOutputStream("Models/Classifier/" + name));
         outModel.writeObject(fc);
-        ObjectOutputStream outStringToWordVector = new ObjectOutputStream(new FileOutputStream("StringToWordVector/" + name)) ;
+        ObjectOutputStream outStringToWordVector = new ObjectOutputStream(new FileOutputStream("Models/StringToWordVector/" + name)) ;
         outStringToWordVector.writeObject(stringToWordVector);
 
         outModel.close();

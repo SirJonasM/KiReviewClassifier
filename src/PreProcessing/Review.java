@@ -1,4 +1,4 @@
-package classes;
+package PreProcessing;
 
 public class Review {
     String text;
@@ -17,16 +17,10 @@ public class Review {
         this.text = text;
     }
 
-    public String getEvaluation() {
-        return evaluation;
-    }
 
-    public void setEvaluation(String evaluation) {
-        this.evaluation = evaluation;
-    }
 
     @Override
     public String toString() {
-        return "'" + text + "', " + evaluation;
+        return "'" + text + "'," + evaluation;
     }
 }
