@@ -17,14 +17,11 @@ public class preDataProcessing {
     static ArrayList<String> positiveWords = new ArrayList<>();
     static ArrayList<String> negativeWords = new ArrayList<>();
     static ArrayList<String> connectWords = new ArrayList<>();
-    static String header = """
-            @relation imdb-sentiment-2011-weka.filters.unsupervised.instance.Resample-S1-Z50.0-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V
-                        
-            @attribute Text string
-            @attribute class-att {pos,neg}
-                                          
-            @data
-            """;
+    static String header = "@relation imdb-sentiment-2011-weka.filters.unsupervised.instance.Resample-S1-Z50.0-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V\n"
+            +"\n@attribute Text string\n"
+            +"@attribute class-att {pos,neg}\n"
+            +"\n"
+            +"@data\n";
 
 
     public static void main(String[] args) throws IOException {
@@ -34,7 +31,7 @@ public class preDataProcessing {
         connectWords.add("wont");
 
 
-        reader = new BufferedReader(new FileReader("Data/TrainData.arff"));
+        reader = new BufferedReader(new FileReader("Data/DevData.arff"));
         positiveWordsReader = new BufferedReader(new FileReader("Data/positiveWords"));
         negativeWordsReader = new BufferedReader(new FileReader("Data/negativeWords"));
         getWords();
@@ -43,7 +40,7 @@ public class preDataProcessing {
         System.out.println(positiveWords.size());
         System.out.println(negativeWords.size());
 
-        writer = new BufferedWriter(new FileWriter("Data/TrainDataProcessed.arff"));
+        writer = new BufferedWriter(new FileWriter("Data/DevDataProcessed.arff"));
         writer.write(header);
 
         String line = reader.readLine();
