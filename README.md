@@ -1,5 +1,5 @@
 # KiReviewClassifier
-Projekt zur Erkennung einer positvien oder negativen FilmReview 
+Projekt zur Erkennung einer positven oder negativen Film Review 
 
 ## PreProcessing: 
 preDataprocessing erstellt eine neue Datei (Name alter Datei, mit Endung ...<Processed.arff>.
