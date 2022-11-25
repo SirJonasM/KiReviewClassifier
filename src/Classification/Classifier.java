@@ -29,7 +29,7 @@ public class Classifier {
     FilteredClassifier fc;
     private final boolean  testMode;
     private final boolean  isNaiveBayes;
-
+private DataSource testSrc;
     public Classifier(int numToSelect, int wordsToKeep, String trainingsSet, String testSet) {
         testMode = false;
         isNaiveBayes = false;
@@ -41,8 +41,8 @@ public class Classifier {
             trainDataSet = trainData.getDataSet();
             trainDataSet.setClassIndex(1);
 
-            DataSource testData = new DataSource("Data/" + testSet + ".arff");
-            testDataSet = testData.getDataSet();
+            testSrc = new DataSource("Data/" + testSet + ".arff");
+            testDataSet = testSrc.getDataSet();
             testDataSet.setClassIndex(1);
             j48 = new J48();
         } catch (Exception e) {
@@ -50,7 +50,8 @@ public class Classifier {
         }
     }
 
-    public Classifier(String testSet, String model,boolean isNaiveBayes) {
+    public Classifier(String testSet, String model,boolean isNaiveBayes) throws Exception {
+        testSrc = new DataSource("Data/"+testSet +".arff");
         testMode = true;
         nameID = model;
         if(isNaiveBayes)nameID = "NaiveBayes/"+model;
@@ -173,8 +174,10 @@ public class Classifier {
         configureStringToWordVector();
     }
     void configureStringToWordVector() throws Exception {
-        stringToWordVector.setOutputWordCounts(false);
+        stringToWordVector.setOutputWordCounts(true);
         stringToWordVector.setLowerCaseTokens(true);
+        stringToWordVector.setTFTransform(true);
+        stringToWordVector.setIDFTransform(true);
         stringToWordVector.setInputFormat(trainDataSet);
         stringToWordVector.setWordsToKeep(wordsToKeep);
         stringToWordVector.setTokenizer(new AlphabeticTokenizer());
@@ -205,5 +208,21 @@ public class Classifier {
         System.out.println(classDetails);
         System.out.println(summary);
         return confusionMatrix + "\n\n"+classDetails+"\n\n" + summary;
+    }
+
+    public String getFalsePredictions() throws Exception {
+        Evaluation eval = new Evaluation(testDataSet);
+        Instances instances = testSrc.getDataSet();
+        StringBuilder sB = new StringBuilder();
+        for(int i = 0;i<testDataSet.size();i++){
+
+            boolean reviewAndPredictionNeg = (eval.evaluateModelOnce(fc, testDataSet.instance(i))==1.0) && (testDataSet.instance(i).toString().contains("neg"));
+            boolean reviewAndPredictionPos = (eval.evaluateModelOnce(fc, testDataSet.instance(i))==0.0) && (!testDataSet.instance(i).toString().contains("neg"));
+            if (reviewAndPredictionNeg || reviewAndPredictionPos){
+                    continue;
+            }
+            sB.append(instances.instance(i)).append("\n\n");
+        }
+        return sB.toString();
     }
 }

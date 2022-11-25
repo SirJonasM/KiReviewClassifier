@@ -20,7 +20,6 @@ public class DevelopTestAndSaveModel {
 
         classifier.doFilteredClassifier();
         long buildModel = System.nanoTime();
-
         long evaluate = evaluateAndSave(classifier);
 
         if(!name.isBlank()){
