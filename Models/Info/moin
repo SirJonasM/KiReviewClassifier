@@ -1,0 +1,156 @@
+------------- Test on Train Dataset ------------- 
+Matrix:
+    a    b   <-- classified as
+ 7377 2720 |    a = pos
+ 3725 6428 |    b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,731    0,367    0,664      0,731    0,696      0,365    0,741     0,690     pos
+                 0,633    0,269    0,703      0,633    0,666      0,365    0,741     0,732     neg
+Weighted Avg.    0,682    0,318    0,684      0,682    0,681      0,365    0,741     0,711     
+
+
+
+Correctly Classified Instances       13805               68.1728 %
+Incorrectly Classified Instances      6445               31.8272 %
+Kappa statistic                          0.3636
+Mean absolute error                      0.4088
+Root mean squared error                  0.4521
+Relative absolute error                 81.7585 %
+Root relative squared error             90.4204 %
+Total Number of Instances            20250     
+\n\n\n\n------------- Test on Test Dataset ------------- \nMatrix:
+   a   b   <-- classified as
+ 803 278 |   a = pos
+ 411 758 |   b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,743    0,352    0,661      0,743    0,700      0,392    0,765     0,703     pos
+                 0,648    0,257    0,732      0,648    0,688      0,392    0,765     0,764     neg
+Weighted Avg.    0,694    0,303    0,698      0,694    0,693      0,392    0,765     0,735     
+
+
+
+Correctly Classified Instances        1561               69.3778 %
+Incorrectly Classified Instances       689               30.6222 %
+Kappa statistic                          0.3894
+Mean absolute error                      0.3955
+Root mean squared error                  0.4431
+Relative absolute error                 79.2141 %
+Root relative squared error             88.6853 %
+Total Number of Instances             2250     
+
+
+Time to SetUp Classifier: 0.667
+Time to filter with String to Word Vector Filter: 1.223
+Time to rank Attributes with AttributeSelection: 0.018
+Time to Build the Model: 0.988
+Time to Test Model: 0.204
+Time to Build and Test Model: 3.103\n\n\n\n------------- Test on Test Dataset ------------- \nMatrix:
+   a   b   <-- classified as
+ 801 280 |   a = pos
+ 435 734 |   b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,741    0,372    0,648      0,741    0,691      0,370    0,751     0,689     pos
+                 0,628    0,259    0,724      0,628    0,672      0,370    0,751     0,755     neg
+Weighted Avg.    0,682    0,313    0,687      0,682    0,682      0,370    0,751     0,723     
+
+
+
+Correctly Classified Instances        1535               68.2222 %
+Incorrectly Classified Instances       715               31.7778 %
+Kappa statistic                          0.3669
+Mean absolute error                      0.4034
+Root mean squared error                  0.4485
+Relative absolute error                 80.8008 %
+Root relative squared error             89.7691 %
+Total Number of Instances             2250     
+
+Time to Test Model: 0.0\n\n\n\n------------- Test on Test Dataset ------------- \nMatrix:
+   a   b   <-- classified as
+ 801 280 |   a = pos
+ 435 734 |   b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,741    0,372    0,648      0,741    0,691      0,370    0,751     0,689     pos
+                 0,628    0,259    0,724      0,628    0,672      0,370    0,751     0,755     neg
+Weighted Avg.    0,682    0,313    0,687      0,682    0,682      0,370    0,751     0,723     
+
+
+
+Correctly Classified Instances        1535               68.2222 %
+Incorrectly Classified Instances       715               31.7778 %
+Kappa statistic                          0.3669
+Mean absolute error                      0.4034
+Root mean squared error                  0.4485
+Relative absolute error                 80.8008 %
+Root relative squared error             89.7691 %
+Total Number of Instances             2250     
+
+Time to Test Model: 0.0\n\n\n\n------------- Test on Test Dataset ------------- \nMatrix:
+   a   b   <-- classified as
+ 801 280 |   a = pos
+ 435 734 |   b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,741    0,372    0,648      0,741    0,691      0,370    0,751     0,689     pos
+                 0,628    0,259    0,724      0,628    0,672      0,370    0,751     0,755     neg
+Weighted Avg.    0,682    0,313    0,687      0,682    0,682      0,370    0,751     0,723     
+
+
+
+Correctly Classified Instances        1535               68.2222 %
+Incorrectly Classified Instances       715               31.7778 %
+Kappa statistic                          0.3669
+Mean absolute error                      0.4034
+Root mean squared error                  0.4485
+Relative absolute error                 80.8008 %
+Root relative squared error             89.7691 %
+Total Number of Instances             2250     
+
+Time to Test Model: 0.0
+
+
+
+------------- Test on Test Dataset ------------- 
+Matrix:
+   a   b   <-- classified as
+ 801 280 |   a = pos
+ 435 734 |   b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,741    0,372    0,648      0,741    0,691      0,370    0,751     0,689     pos
+                 0,628    0,259    0,724      0,628    0,672      0,370    0,751     0,755     neg
+Weighted Avg.    0,682    0,313    0,687      0,682    0,682      0,370    0,751     0,723     
+
+
+
+Correctly Classified Instances        1535               68.2222 %
+Incorrectly Classified Instances       715               31.7778 %
+Kappa statistic                          0.3669
+Mean absolute error                      0.4034
+Root mean squared error                  0.4485
+Relative absolute error                 80.8008 %
+Root relative squared error             89.7691 %
+Total Number of Instances             2250     
+
+Time to Test Model: 0.0
