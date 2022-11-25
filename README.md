@@ -1,5 +1,5 @@
 # KiReviewClassifier
-Projekt zur Erkennung einer positvien oder negativen FilmReview 
+Projekt zur Erkennung einer positvien oder negativen FilmReview. <br>
 Weka.jar muss als Library inkludiert sein.
 
 ## PreProcessing: 
