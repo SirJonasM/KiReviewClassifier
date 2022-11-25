@@ -1,5 +1,6 @@
 # KiReviewClassifier
-Projekt zur Erkennung einer positven oder negativen Film Review 
+Projekt zur Erkennung einer positvien oder negativen FilmReview 
+Weka.jar muss als Library inkludiert sein.
 
 ## PreProcessing: 
 preDataprocessing erstellt eine neue Datei (Name alter Datei, mit Endung ...<Processed.arff>.

@@ -16,7 +16,7 @@ public class DevelopTestAndSaveModel {
 
         classifier.evaluate();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Unter welchem Ihr Baum abgespeichert werden?(wenn nicht speichern Enter drücken)");
+        System.out.println("Unter welchem Namen soll Ihr Classifier abgespeichert werden?(nicht speichern -> Enter)");
 
         String name = scanner.nextLine().trim();
         if(!name.isBlank()) {
