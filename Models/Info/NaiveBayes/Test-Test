@@ -1,0 +1,80 @@
+------------- Test on Train Dataset ------------- 
+Matrix:
+    a    b   <-- classified as
+ 8828 1269 |    a = pos
+ 1287 8866 |    b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,874    0,127    0,873      0,874    0,874      0,748    0,947     0,945     pos
+                 0,873    0,126    0,875      0,873    0,874      0,748    0,947     0,949     neg
+Weighted Avg.    0,874    0,126    0,874      0,874    0,874      0,748    0,947     0,947     
+
+
+
+Correctly Classified Instances       17694               87.3778 %
+Incorrectly Classified Instances      2556               12.6222 %
+Kappa statistic                          0.7476
+Mean absolute error                      0.1582
+Root mean squared error                  0.3013
+Relative absolute error                 31.6396 %
+Root relative squared error             60.2628 %
+Total Number of Instances            20250     
+
+
+
+
+------------- Test on Test Dataset ------------- 
+Matrix:
+    a    b   <-- classified as
+  577  504 |    a = pos
+   49 1120 |    b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,534    0,042    0,922      0,534    0,676      0,548    0,913     0,900     pos
+                 0,958    0,466    0,690      0,958    0,802      0,548    0,913     0,922     neg
+Weighted Avg.    0,754    0,262    0,801      0,754    0,741      0,548    0,913     0,912     
+
+
+
+Correctly Classified Instances        1697               75.4222 %
+Incorrectly Classified Instances       553               24.5778 %
+Kappa statistic                          0.4998
+Mean absolute error                      0.2534
+Root mean squared error                  0.4378
+Relative absolute error                 50.7554 %
+Root relative squared error             87.6249 %
+Total Number of Instances             2250     
+
+
+
+
+------------- Test on Test Dataset ------------- 
+Matrix:
+    a    b   <-- classified as
+  577  504 |    a = pos
+   49 1120 |    b = neg
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,534    0,042    0,922      0,534    0,676      0,548    0,913     0,900     pos
+                 0,958    0,466    0,690      0,958    0,802      0,548    0,913     0,922     neg
+Weighted Avg.    0,754    0,262    0,801      0,754    0,741      0,548    0,913     0,912     
+
+
+
+Correctly Classified Instances        1697               75.4222 %
+Incorrectly Classified Instances       553               24.5778 %
+Kappa statistic                          0.4998
+Mean absolute error                      0.2534
+Root mean squared error                  0.4378
+Relative absolute error                 50.7554 %
+Root relative squared error             87.6249 %
+Total Number of Instances             2250     

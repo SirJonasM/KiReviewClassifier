@@ -53,6 +53,7 @@ public class Classifier {
     public Classifier(String testSet, String model,boolean isNaiveBayes) {
         testMode = true;
         nameID = model;
+        if(isNaiveBayes)nameID = "NaiveBayes/"+model;
         this.isNaiveBayes = isNaiveBayes;
         try {
             DataSource testData = new DataSource("Data/" + testSet + ".arff");
@@ -112,6 +113,8 @@ public class Classifier {
 
 
     void saveModel(String name) throws IOException {
+        nameID = name;
+        if(isNaiveBayes) nameID = "NaiveBayes/"+name;
         if(isNaiveBayes) saveNaiveBayes(name);
         else saveFilteredClassifier(name);
 

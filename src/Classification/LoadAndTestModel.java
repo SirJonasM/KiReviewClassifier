@@ -13,11 +13,11 @@ public class LoadAndTestModel {
         String evaluation = classifier.evaluate();
         System.out.println("Time to Test Model: " + (System.currentTimeMillis()-time1)/1000/1000.);
         evaluation += "\nTime to Test Model: " + (System.currentTimeMillis()-time1)/1000/1000.;
-        appendInfo(evaluation);
+        appendInfo(evaluation, classifier.nameID);
 
     }
-    static void appendInfo(String info){
-        try(FileWriter fileWriter = new FileWriter("Models/Info/"+classifier.nameID,true)){
+    static void appendInfo(String info,String name){
+        try(FileWriter fileWriter = new FileWriter("Models/Info/"+name,true)){
             BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.write(info);
             writer.close();

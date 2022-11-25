@@ -29,7 +29,5 @@ public class Main {
             line = preDataProcessing.reader.readLine();
         }
         preDataProcessing.writer.close();
-
-
     }
 }

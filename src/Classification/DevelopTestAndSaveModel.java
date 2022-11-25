@@ -51,7 +51,7 @@ public class DevelopTestAndSaveModel {
             name = name.replace(" ", "-");
             name = name.replace(".", "-");
             classifier.saveModel(name);
-            try (FileWriter fileWriter = new FileWriter("Models/Info/" + name)) {
+            try (FileWriter fileWriter = new FileWriter("Models/Info/" + classifier.nameID)) {
                 BufferedWriter writer = new BufferedWriter(fileWriter);
                 writer.write(evaluation);
                 writer.close();
