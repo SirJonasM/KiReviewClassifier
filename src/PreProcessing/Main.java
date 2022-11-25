@@ -3,7 +3,7 @@ package PreProcessing;
 import java.io.*;
 
 public class Main {
-    static final String rawDataName = "DevData2";
+    static final String rawDataName = "DevData";
 
     public static void main(String[] args) throws IOException {
         PreDataProcessing preDataProcessing = new PreDataProcessing();

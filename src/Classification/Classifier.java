@@ -7,6 +7,7 @@ import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.trees.J48;
+import weka.core.tokenizers.AlphabeticTokenizer;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.filters.unsupervised.attribute.StringToWordVector;
@@ -15,6 +16,7 @@ import java.io.*;
 
 
 public class Classifier {
+    String nameID;
     int wordsToKeep;
     int numToSelect;
     Instances trainDataSet;
@@ -50,6 +52,7 @@ public class Classifier {
 
     public Classifier(String testSet, String model,boolean isNaiveBayes) {
         testMode = true;
+        nameID = model;
         this.isNaiveBayes = isNaiveBayes;
         try {
             DataSource testData = new DataSource("Data/" + testSet + ".arff");
@@ -134,7 +137,7 @@ public class Classifier {
     void useStringToWordVector() throws Exception {
         if(!testMode)  trainDataSet = StringToWordVector.useFilter(trainDataSet, stringToWordVector);
         testDataSet = StringToWordVector.useFilter(testDataSet, stringToWordVector);
-        System.out.println(testDataSet);
+        //System.out.println(testDataSet);
     }
 
     void doFilteredClassifier() throws Exception {
@@ -164,32 +167,40 @@ public class Classifier {
 
     void doStringToWordVector() throws Exception {
         stringToWordVector = new StringToWordVector();
-        stringToWordVector.setOutputWordCounts(true);
+        configureStringToWordVector();
+    }
+    void configureStringToWordVector() throws Exception {
+        stringToWordVector.setOutputWordCounts(false);
         stringToWordVector.setLowerCaseTokens(true);
-        stringToWordVector.setInputFormat(testDataSet);
+        stringToWordVector.setInputFormat(trainDataSet);
         stringToWordVector.setWordsToKeep(wordsToKeep);
-        //stringToWordVector.setTokenizer(new AlphabeticTokenizer());
+        stringToWordVector.setTokenizer(new AlphabeticTokenizer());
     }
 
-    void evaluate() throws Exception {
+    String evaluate() throws Exception {
+        String evaluation = "";
         if(!testMode) {
-            System.out.println("\n\n\n\n------------- Train Data Test ------------- \n");
+            System.out.println("\n\n\n\n------------- Test on Train Dataset ------------- \n");
             Evaluation evalTrain = new Evaluation(trainDataSet);
             if(isNaiveBayes) evalTrain.evaluateModel(naiveBayes,trainDataSet);
             else evalTrain.evaluateModel(fc, trainDataSet);
-            printEvaluation(evalTrain);
+            evaluation = "------------- Test on Train Dataset ------------- \n" + printEvaluation(evalTrain);
         }
-        System.out.println("\n\n\n\n------------- Test Data Test ------------- \n");
+        System.out.println("\n\n\n\n------------- Test on Test Dataset ------------- \n");
 
         Evaluation evalTest = new Evaluation(testDataSet);
         if(isNaiveBayes) evalTest.evaluateModel(naiveBayes,testDataSet);
         else evalTest.evaluateModel(fc, testDataSet);
-        printEvaluation(evalTest);
+        return evaluation + "\n\n\n\n------------- Test on Test Dataset ------------- \n"+printEvaluation(evalTest);
     }
 
-    private void printEvaluation(Evaluation eval) throws Exception {
-        System.out.println(eval.toMatrixString("Matrix:"));
-        System.out.println(eval.toClassDetailsString());
-        System.out.println(eval.toSummaryString());
+    private String printEvaluation(Evaluation eval) throws Exception {
+        String confusionMatrix = eval.toMatrixString("Matrix:");
+        String classDetails = eval.toClassDetailsString();
+        String summary = eval.toSummaryString();
+        System.out.println(confusionMatrix);
+        System.out.println(classDetails);
+        System.out.println(summary);
+        return confusionMatrix + "\n\n"+classDetails+"\n\n" + summary;
     }
 }
