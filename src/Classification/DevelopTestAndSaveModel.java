@@ -1,21 +1,33 @@
 package Classification;
 
+import PreProcessing.Main;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.Scanner;
 
 public class DevelopTestAndSaveModel {
     static String name = "";
+    static String rawDataTrain = "TrainData";
+    static String rawDataTest = "DevData";
+    static String TrainData = "TrainDataProcessed";
+    static String TestData = "DevDataProcessed";
+
+
     public static void main(String[] args) throws Exception {
+        System.out.println("--------------Building Datasets -----------------");
+        //Main.externelMain(rawDataTrain,TrainData);
+        //Main.externelMain(rawDataTest,TestData);
+        System.out.println("--------------Built DataSets ---------------");
         long start = System.nanoTime();
-        Classifier classifier = new Classifier(10, 11, "TrainDataProcessed", "DevData");
+        Classifier classifier = new Classifier(600, 10000
+                ,TrainData,TestData);
         long setUp = System.nanoTime();
         classifier.doStringToWordVector();
 
         classifier.useStringToWordVector();
         long stringToWordVector = System.nanoTime();
 
-        classifier.doAttributeSelection();
+        classifier.configureAttributeSelection();
         long attributeSelection = System.nanoTime();
 
         classifier.doFilteredClassifier();

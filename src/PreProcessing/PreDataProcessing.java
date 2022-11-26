@@ -12,11 +12,7 @@ public class PreDataProcessing {
      ArrayList<String> positiveWords = new ArrayList<>();
      ArrayList<String> negativeWords = new ArrayList<>();
     ArrayList<String> connectWords = new ArrayList<>();
-    String header = "@relation imdb-sentiment-2011-weka.filters.unsupervised.instance.Resample-S1-Z50.0-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V\n"
-            +"\n@attribute Text string\n"
-            +"@attribute class-att {pos,neg}\n"
-            +"\n"
-            +"@data\n";
+    String header = "@relation imdb-sentiment-2011-weka.filters.unsupervised.instance.Resample-S1-Z50.0-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V-weka.filters.unsupervised.instance.Resample-S1-Z10.0-no-replacement-V\n";
 
 
     public PreDataProcessing() {
@@ -53,14 +49,19 @@ public class PreDataProcessing {
         review.setText(review.getText().toLowerCase());
         String[] text = review.getText().split(" ");
         for(int i = 0;i< text.length;i++){
+            if(text[i].endsWith(")") ||text[i].endsWith("}")||text[i].endsWith("]")){
+                text[i] = text[i].substring(0,text[i].length()-1);
+            }
+            if(text[i].endsWith("(") ||text[i].endsWith("[")||text[i].endsWith("{")){
+                text[i] = text[i].substring(1);
+            }
+            if(connectWords.contains(text[i])){
+                continue;
+            }
             if(positiveWords.contains(text[i])){
                 continue;
             }
-            if(negativeWords.contains(text[i])){
-                continue;
-            }
-            if(text[i].equals("not")){
-                i++;
+            if(negativeWords.contains(text[i])) {
                 continue;
             }
             text[i] = "";
@@ -68,7 +69,7 @@ public class PreDataProcessing {
         StringBuilder stringBuilder = new StringBuilder();
         Arrays.stream(text).forEach(a -> {
             if(a.isEmpty()) return;
-            if(connectWords.contains(a)) {
+            if(a.equals("not")) {
                 stringBuilder.append(a);
                 return;
             }

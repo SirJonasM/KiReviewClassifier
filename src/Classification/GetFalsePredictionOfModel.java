@@ -11,5 +11,5 @@ public static void main(String[] args) throws Exception {
     String falsePredictions = classifier.getFalsePredictions();
     BufferedWriter writer = new BufferedWriter(new FileWriter("FalsePredictions/falsePredictions.txt"));
     writer.write(falsePredictions);
-}
+    }
 }

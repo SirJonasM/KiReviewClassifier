@@ -22,7 +22,7 @@ wird: <br>
 Die Listen sind von GitHub: <br> <br>
 positiv: https://gist.github.com/mkulakowski2/4289437 <br>
 negativ: https://gist.github.com/mkulakowski2/4289441
-<br> <br>
+<br>Es wurden aber noch von Hand ein paar Worte hinzugefügt.<br>
 
 Außerdem werden die Wörter: 
 > not, dont, wont, didnt
@@ -44,14 +44,20 @@ __testSet...__ Name der zu grunde liegenden Test Daten Datei. <br>
 <br>
 Es wird ein Decision Tree gebaut und ausgegeben. <br>
 Wenn man diesen speichern will, kann man ihm einen Namen geben und er wird gespeichert unter __Models/Classifier__ und __Models/StringToWordVector__, oder man drückt Enter und der Tree wird verworfen. <br>
-
+Wenn man den Baum speichert, wird zudem eine Infodatei erstellt, welche die Evaluation abspeichert.
 
 ### class LoadAndTestModel:
-
 Mit dieser Klasse kann man einen zuvor generierten Tree laden und auf ein neues Testset anwenden.<br>
 Man gibt dafür die Datei und den namen des Models an.
 
+### class getFalsePredictions:
+Mit dieser Klasse kann man sich alle Reviews ausgeben lassen, diese werden in die Datei __FalsePredictions/falsePredictions.txt__ geschrieben
 
+### class NaiveBayesDevelopTestAndSave
+Mit dieser Klasse kann man sich einen NaiveBayes Classifier erstellen, welcher durch die eingegebenen Trainingsdaten trainiert und auf die eingegebenen Testdaten angewendet.
+Den Classifier kann man dann wie bei __DevelopTestAndSaveModel__ speichern, das Model wird dann in __Models/Classifier/NaiveBayes__ gespeichert.
+### class NaiveBayesLoadAndTest
+Mit dieser Klasse kann man einen NaiveBayes Classifier einlesen und auf neue Testdaten anwenden.
 
 
 

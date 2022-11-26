@@ -1,5 +1,6 @@
 package Classification;
 
+import weka.attributeSelection.CorrelationAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayesMultinomialText;
@@ -7,7 +8,11 @@ import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.trees.J48;
+import weka.core.stemmers.IteratedLovinsStemmer;
+import weka.core.stemmers.LovinsStemmer;
+import weka.core.stemmers.SnowballStemmer;
 import weka.core.tokenizers.AlphabeticTokenizer;
+import weka.core.tokenizers.WordTokenizer;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.filters.unsupervised.attribute.StringToWordVector;
@@ -39,11 +44,11 @@ private DataSource testSrc;
             //Daten einlesen
             DataSource trainData = new DataSource("Data/" + trainingsSet + ".arff");
             trainDataSet = trainData.getDataSet();
-            trainDataSet.setClassIndex(1);
+            trainDataSet.setClassIndex(trainDataSet.numAttributes()-1);
 
             testSrc = new DataSource("Data/" + testSet + ".arff");
             testDataSet = testSrc.getDataSet();
-            testDataSet.setClassIndex(1);
+            testDataSet.setClassIndex(testDataSet.numAttributes()-1);
             j48 = new J48();
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,12 +59,12 @@ private DataSource testSrc;
         testSrc = new DataSource("Data/"+testSet +".arff");
         testMode = true;
         nameID = model;
-        if(isNaiveBayes)nameID = "NaiveBayes/"+model;
+        if(isNaiveBayes)nameID = "NaiveBayes/"+model + ".model";
         this.isNaiveBayes = isNaiveBayes;
         try {
             DataSource testData = new DataSource("Data/" + testSet + ".arff");
             testDataSet = testData.getDataSet();
-            testDataSet.setClassIndex(1);
+            testDataSet.setClassIndex(testDataSet.numAttributes()-1);
             loadModel(model);
             if(!isNaiveBayes) j48 = new J48();
         } catch (Exception e) {
@@ -74,11 +79,11 @@ private DataSource testSrc;
             //Daten einlesen
             DataSource trainData = new DataSource("Data/" + trainingSet + ".arff");
             trainDataSet = trainData.getDataSet();
-            trainDataSet.setClassIndex(1);
+            trainDataSet.setClassIndex(trainDataSet.numAttributes()-1);
 
             DataSource testData = new DataSource("Data/" + testSet + ".arff");
             testDataSet = testData.getDataSet();
-            testDataSet.setClassIndex(1);
+            testDataSet.setClassIndex(testDataSet.numAttributes()-1);
             this.naiveBayes = new NaiveBayesMultinomialText();
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,7 +120,7 @@ private DataSource testSrc;
 
     void saveModel(String name) throws IOException {
         nameID = name;
-        if(isNaiveBayes) nameID = "NaiveBayes/"+name;
+        if(isNaiveBayes) nameID = "NaiveBayes/"+name + ".model";
         if(isNaiveBayes) saveNaiveBayes(name);
         else saveFilteredClassifier(name);
 
@@ -123,7 +128,7 @@ private DataSource testSrc;
     }
 
     private void saveFilteredClassifier(String name) throws IOException {
-        ObjectOutputStream outModel = new ObjectOutputStream(new FileOutputStream("Models/Classifier/"+name));
+        ObjectOutputStream outModel = new ObjectOutputStream(new FileOutputStream("Models/Classifier/"+name + ".model"));
         outModel.writeObject(fc);
         outModel.close();
 
@@ -152,12 +157,12 @@ private DataSource testSrc;
         System.out.println(fc);
     }
 
-    void doAttributeSelection() {
+    void configureAttributeSelection() {
         aSFilter = new AttributeSelection();
         aSFilter.setEvaluator(new InfoGainAttributeEval());
         Ranker ranker = new Ranker();
-        ranker.setThreshold(0.0);
-        ranker.setNumToSelect(numToSelect);
+        ranker.setThreshold(0.004);
+        //ranker.setNumToSelect(numToSelect);
         aSFilter.setSearch(ranker);
     }
     void doNaiveBayes() throws Exception {
@@ -173,14 +178,14 @@ private DataSource testSrc;
         stringToWordVector = new StringToWordVector();
         configureStringToWordVector();
     }
+    //Configure the StringToWordVextor Filter here:
     void configureStringToWordVector() throws Exception {
         stringToWordVector.setOutputWordCounts(true);
         stringToWordVector.setLowerCaseTokens(true);
-        stringToWordVector.setTFTransform(true);
-        stringToWordVector.setIDFTransform(true);
+        stringToWordVector.setMinTermFreq(50);
         stringToWordVector.setInputFormat(trainDataSet);
         stringToWordVector.setWordsToKeep(wordsToKeep);
-        stringToWordVector.setTokenizer(new AlphabeticTokenizer());
+        stringToWordVector.setTokenizer(new WordTokenizer());
     }
 
     String evaluate() throws Exception {
