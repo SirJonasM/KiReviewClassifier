@@ -19,8 +19,8 @@ public class DevelopTestAndSaveModel {
         //Main.externelMain(rawDataTest,TestData);
         System.out.println("--------------Built DataSets ---------------");
         long start = System.nanoTime();
-        Classifier classifier = new Classifier(600, 10000
-                ,TrainData,TestData);
+        Classifier classifier = new Classifier(250, 500
+                ,TrainData,TestData,true);
         long setUp = System.nanoTime();
         classifier.doStringToWordVector();
 

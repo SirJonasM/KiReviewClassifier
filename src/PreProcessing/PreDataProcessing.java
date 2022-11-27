@@ -59,9 +59,11 @@ public class PreDataProcessing {
                 continue;
             }
             if(positiveWords.contains(text[i])){
+                review.positive++;
                 continue;
             }
             if(negativeWords.contains(text[i])) {
+                review.negative++;
                 continue;
             }
             text[i] = "";
@@ -77,6 +79,7 @@ public class PreDataProcessing {
 
         });
         review.setText(stringBuilder.toString());
+        review.informationsDichte = (double) review.text.length()/review.reviewLength;
         }
     }
 

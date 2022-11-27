@@ -7,7 +7,7 @@ import java.io.IOException;
 public class LoadAndTestModel {
     static Classifier classifier;
     public static void main(String [] args) throws Exception {
-        classifier = new Classifier("DevDataProcessed","25-1000-813",false);
+        classifier = new Classifier("DevDataProcessed","Random-Forrest_1",false);
         classifier.useStringToWordVector();
         long time1 = System.currentTimeMillis();
         String evaluation = classifier.evaluate();
@@ -21,7 +21,6 @@ public class LoadAndTestModel {
             BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.write(info);
             writer.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

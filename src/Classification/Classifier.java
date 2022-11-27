@@ -5,6 +5,7 @@ import weka.attributeSelection.Ranker;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayesMultinomialText;
 import weka.classifiers.meta.FilteredClassifier;
+import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.trees.J48;
@@ -27,17 +28,19 @@ public class Classifier {
     Instances trainDataSet;
     Instances testDataSet;
     J48 j48;
+    RandomForest randomForest;
     NaiveBayesMultinomialText naiveBayes;
     AttributeSelection aSFilter;
     StringToWordVector stringToWordVector;
-
+    boolean isJ48;
     FilteredClassifier fc;
     private final boolean  testMode;
     private final boolean  isNaiveBayes;
 private DataSource testSrc;
-    public Classifier(int numToSelect, int wordsToKeep, String trainingsSet, String testSet) {
+    public Classifier(int numToSelect, int wordsToKeep, String trainingsSet, String testSet,boolean isJ48) {
         testMode = false;
         isNaiveBayes = false;
+        this.isJ48 = isJ48;
         this.numToSelect = numToSelect;
         this.wordsToKeep = wordsToKeep;
         try {
@@ -49,7 +52,8 @@ private DataSource testSrc;
             testSrc = new DataSource("Data/" + testSet + ".arff");
             testDataSet = testSrc.getDataSet();
             testDataSet.setClassIndex(testDataSet.numAttributes()-1);
-            j48 = new J48();
+            if(isJ48) j48 = new J48();
+            else  randomForest = new RandomForest();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,7 +107,7 @@ private DataSource testSrc;
     }
 
     private void loadFilteredClassifier(String model) throws IOException, ClassNotFoundException {
-        ObjectInputStream inClassifier = new ObjectInputStream(new FileInputStream("Models/Classifier/"+model));
+        ObjectInputStream inClassifier = new ObjectInputStream(new FileInputStream("Models/Classifier/"+model + ".model"));
         fc = (FilteredClassifier) inClassifier.readObject();
         inClassifier.close();
 
@@ -144,6 +148,7 @@ private DataSource testSrc;
     }
 
     void useStringToWordVector() throws Exception {
+        if(isNaiveBayes) return;
         if(!testMode)  trainDataSet = StringToWordVector.useFilter(trainDataSet, stringToWordVector);
         testDataSet = StringToWordVector.useFilter(testDataSet, stringToWordVector);
         //System.out.println(testDataSet);
@@ -152,7 +157,9 @@ private DataSource testSrc;
     void doFilteredClassifier() throws Exception {
         fc = new FilteredClassifier();
         fc.setFilter(aSFilter);
-        fc.setClassifier(j48);
+        if(isJ48) fc.setClassifier(j48);
+        else fc.setClassifier(randomForest);
+
         fc.buildClassifier(trainDataSet);
         System.out.println(fc);
     }
@@ -161,8 +168,7 @@ private DataSource testSrc;
         aSFilter = new AttributeSelection();
         aSFilter.setEvaluator(new InfoGainAttributeEval());
         Ranker ranker = new Ranker();
-        ranker.setThreshold(0.004);
-        //ranker.setNumToSelect(numToSelect);
+        ranker.setNumToSelect(numToSelect);
         aSFilter.setSearch(ranker);
     }
     void doNaiveBayes() throws Exception {
@@ -182,10 +188,11 @@ private DataSource testSrc;
     void configureStringToWordVector() throws Exception {
         stringToWordVector.setOutputWordCounts(true);
         stringToWordVector.setLowerCaseTokens(true);
-        stringToWordVector.setMinTermFreq(50);
+        stringToWordVector.setMinTermFreq(1);
         stringToWordVector.setInputFormat(trainDataSet);
         stringToWordVector.setWordsToKeep(wordsToKeep);
-        stringToWordVector.setTokenizer(new WordTokenizer());
+        stringToWordVector.setTokenizer(new AlphabeticTokenizer());
+        stringToWordVector.setStemmer(new IteratedLovinsStemmer());
     }
 
     String evaluate() throws Exception {
