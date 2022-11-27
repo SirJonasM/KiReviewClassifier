@@ -1,7 +1,7 @@
 # KiReviewClassifier
 Projekt zur Erkennung einer positvien oder negativen FilmReview. <br>
-!!! Weka.jar muss als Library inkludiert sein. !!!
-
+!!! Weka.jar muss als Library inkludiert sein. !!!<br>
+Die Fehlermeldung zu Beginn kann man ignorieren, wenn man Java 11 nutzt, erhält man nur eine Warnung.   
 ## PreProcessing: 
 preDataprocessing erstellt eine neue Datei (Name alter Datei, mit Endung ...<Processed.arff>.
 <br>Den Namen der Datei gibt man als Feld der Klasse an.
