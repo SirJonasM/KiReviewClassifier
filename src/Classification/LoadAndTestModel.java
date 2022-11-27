@@ -8,6 +8,8 @@ public class LoadAndTestModel {
     static Classifier classifier;
     public static void main(String [] args) throws Exception {
         classifier = new Classifier("DevDataProcessed","Random-Forrest_1",false);
+
+
         classifier.useStringToWordVector();
         long time1 = System.currentTimeMillis();
         String evaluation = classifier.evaluate();

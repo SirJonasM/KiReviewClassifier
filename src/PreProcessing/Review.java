@@ -4,7 +4,7 @@ public class Review {
     static String[] attributes = new String[]{"@attribute Text String",
             "@attribute reviewLaenge NUMERIC",
             "@attribute satzZeichenAnzahl NUMERIC",
-            //"@attribute negativeWoerter NUMERIC",
+//            "@attribute negativeWoerter NUMERIC",
 //            "@attribute positiveWoerter NUMERIC",
             "@attribute informationsDichte NUMERIC",
             "@attribute class-att {pos,neg}"};
@@ -44,6 +44,12 @@ public class Review {
 
     @Override
     public String toString() {
-        return "'" + text + "'," +reviewLength + "," + satzZeichen +"," + informationsDichte +","  + evaluation;
+        return "'" + text + "',"
+                +reviewLength + ","
+                + satzZeichen +","
+//                + negative + ","
+//                + positive +","
+                + informationsDichte +","
+                + evaluation;
     }
 }
